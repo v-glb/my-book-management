@@ -2,14 +2,22 @@ import { Component } from '@angular/core';
 import { Book } from '../models/book.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';  // CommonModule importieren
+import { CommonModule } from '@angular/common';
 import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
+import { EditBookFormComponent } from '../edit-book-form/edit-book-form.component';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule, AddBookFormComponent, DialogModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    AddBookFormComponent,
+    EditBookFormComponent,
+    DialogModule,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -39,6 +47,8 @@ export class DashboardComponent {
   ];
 
   displayDialog: boolean = false;
+  displayEditDialog: boolean = false;
+  selectedBook!: Book;
 
   showAddBookDialog() {
     this.displayDialog = true;
@@ -46,6 +56,22 @@ export class DashboardComponent {
 
   hideAddBookDialog() {
     this.displayDialog = false;
+  }
+
+  showEditBookDialog(book: Book) {
+    this.selectedBook = book;
+    this.displayEditDialog = true;
+  }
+
+  hideEditBookDialog() {
+    this.displayEditDialog = false;
+  }
+
+  onBookUpdated(updatedBook: Book) {
+    const index = this.books.findIndex((book) => book.id === updatedBook.id);
+    if (index !== -1) { // if book is found
+      this.books[index] = updatedBook;
+    }
   }
 
   onBookAdded(newBook: any) {

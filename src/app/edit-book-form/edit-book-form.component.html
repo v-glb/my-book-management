@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()" #editBookForm="ngForm">
+  <div>
+    <p><strong>{{book.title}}</strong> by {{book.author}}</p>
+  </div>
+  <div>
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" required [(ngModel)]="book.rating" name="rating" #rating="ngModel" min="1" max="5" />
+    <div *ngIf="rating.invalid && (rating.dirty || rating.touched)">
+      <div *ngIf="rating.errors?.['required']">Rating is required.</div>
+      <div *ngIf="rating.errors?.['min']">Rating must be at least 1.</div>
+      <div *ngIf="rating.errors?.['max']">Rating cannot be more than 5.</div>
+    </div>
+  </div>
+  <div>
+    <label for="notes">Notes:</label>
+    <textarea id="notes" [(ngModel)]="book.notes" name="notes" #notes="ngModel"></textarea>
+  </div>
+  <button type="submit" pButton label="Update Book" [disabled]="editBookForm.invalid"></button>
+</form>
+

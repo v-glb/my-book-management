@@ -5,6 +5,13 @@
   <button pButton type="button" label="Cancel" severity="secondary" icon="pi pi-times" (click)="hideAddBookDialog()"></button>
 </p-dialog>
 
+<p-dialog header="Edit Book" [(visible)]="displayEditDialog" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+  <ng-container *ngIf="selectedBook">
+    <app-edit-book-form [book]="selectedBook" (bookUpdated)="onBookUpdated($event); hideEditBookDialog()"></app-edit-book-form>
+  </ng-container>
+  <button pButton type="button" label="Cancel" severity="secondary" icon="pi pi-times" (click)="hideEditBookDialog()"></button>
+</p-dialog>
+
 <div class="book-cards-container">
   <p-card
     *ngFor="let book of books"
@@ -20,7 +27,7 @@
     <p><strong>Notes:</strong> {{ book.notes }}</p>
     <ng-template pTemplate="footer">
       <div class="flex gap-4 mt-1">
-        <p-button label="Edit" class="w-full" styleClass="w-full" />
+        <p-button label="Edit" class="w-full" styleClass="w-full" (click)="showEditBookDialog(book)" />
       </div>
     </ng-template>
   </p-card>
