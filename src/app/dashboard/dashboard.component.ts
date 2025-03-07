@@ -77,4 +77,8 @@ export class DashboardComponent {
   onBookAdded(newBook: any) {
     this.books.push(newBook);
   }
+
+  deleteBook(bookId: number) {
+    this.books = this.books.filter((b) => b.id !== bookId);
+  }
 }
