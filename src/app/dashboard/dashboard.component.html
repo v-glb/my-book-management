@@ -1,3 +1,10 @@
+<button pButton type="button" label="Add New Book" icon="pi pi-plus" (click)="showAddBookDialog()"></button>
+
+<p-dialog header="Add New Book" [(visible)]="displayDialog" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+  <app-add-book-form (bookAdded)="onBookAdded($event); hideAddBookDialog()"></app-add-book-form>
+  <button pButton type="button" label="Cancel" severity="secondary" icon="pi pi-times" (click)="hideAddBookDialog()"></button>
+</p-dialog>
+
 <div class="book-cards-container">
   <p-card
     *ngFor="let book of books"

@@ -3,12 +3,13 @@ import { Book } from '../models/book.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';  // CommonModule importieren
-
+import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CardModule, ButtonModule],
+  imports: [CommonModule, CardModule, ButtonModule, AddBookFormComponent, DialogModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -36,4 +37,18 @@ export class DashboardComponent {
       notes: 'Very thought-provoking.',
     },
   ];
+
+  displayDialog: boolean = false;
+
+  showAddBookDialog() {
+    this.displayDialog = true;
+  }
+
+  hideAddBookDialog() {
+    this.displayDialog = false;
+  }
+
+  onBookAdded(newBook: any) {
+    this.books.push(newBook);
+  }
 }
