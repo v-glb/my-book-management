@@ -1,0 +1,20 @@
+<div class="book-cards-container">
+  <p-card
+    *ngFor="let book of books"
+    [subheader]="book.author"
+    [style]="{ width: '25rem', overflow: 'hidden' }"
+  >
+     <ng-template pTemplate="header">
+        <img alt="Card" class="w-full" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" [style]="{maxHeight: '20em'}" />
+    </ng-template>
+    <ng-template pTemplate="title">{{ book.title }} </ng-template>
+    <ng-template pTemplate="subtitle">{{ book.author }}</ng-template>
+    <p><strong>Rating:</strong> {{ book.rating }}</p>
+    <p><strong>Notes:</strong> {{ book.notes }}</p>
+    <ng-template pTemplate="footer">
+      <div class="flex gap-4 mt-1">
+        <p-button label="Edit" class="w-full" styleClass="w-full" />
+      </div>
+    </ng-template>
+  </p-card>
+</div>
