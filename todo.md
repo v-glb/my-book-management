@@ -2,7 +2,6 @@
 
 ## Next steps
 
-- Confirmation before delete
 - Add navigation bar
 - Implement backend with data persistence
 - Improve UI

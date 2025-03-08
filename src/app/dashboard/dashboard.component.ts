@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { AddBookFormComponent } from '../add-book-form/add-book-form.component';
 import { EditBookFormComponent } from '../edit-book-form/edit-book-form.component';
 import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +19,9 @@ import { DialogModule } from 'primeng/dialog';
     AddBookFormComponent,
     EditBookFormComponent,
     DialogModule,
+    ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -50,6 +54,8 @@ export class DashboardComponent {
   displayEditDialog: boolean = false;
   selectedBook!: Book;
 
+  constructor (private confirmationService: ConfirmationService) {}
+
   showAddBookDialog() {
     this.displayDialog = true;
   }
@@ -80,5 +86,14 @@ export class DashboardComponent {
 
   deleteBook(bookId: number) {
     this.books = this.books.filter((b) => b.id !== bookId);
+  }
+
+  confirmDelete(book: Book) {
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete this book: ${book.title} by ${book.author}?`,
+      accept: () => {
+        this.deleteBook(book.id);
+      },
+    });
   }
 }

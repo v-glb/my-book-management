@@ -12,6 +12,8 @@
   <button pButton type="button" label="Cancel" severity="secondary" icon="pi pi-times" (click)="hideEditBookDialog()"></button>
 </p-dialog>
 
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
 <div class="book-cards-container">
   <p-card
     *ngFor="let book of books"
@@ -28,7 +30,7 @@
     <ng-template pTemplate="footer">
       <div class="flex gap-4 mt-1">
         <p-button label="Edit" class="w-full" styleClass="w-full" (click)="showEditBookDialog(book)" />
-        <p-button label="Delete" class="w-full" styleClass="w-full" (click)="deleteBook(book.id)" severity="danger" icon="pi pi-trash" />
+        <p-button label="Delete" class="w-full" styleClass="w-full" (click)="confirmDelete(book)" severity="danger" icon="pi pi-trash" />
       </div>
     </ng-template>
   </p-card>
