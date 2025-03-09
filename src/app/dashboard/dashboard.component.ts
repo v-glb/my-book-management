@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Book } from '../models/book.model';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -8,6 +8,9 @@ import { EditBookFormComponent } from '../edit-book-form/edit-book-form.componen
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { BookService } from '../services/book.service';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+
 
 @Component({
   selector: 'app-dashboard',
@@ -19,42 +22,27 @@ import { ConfirmationService } from 'primeng/api';
     AddBookFormComponent,
     EditBookFormComponent,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    HttpClientModule,
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, BookService],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent {
-  books: Book[] = [
-    {
-      id: 1,
-      title: 'The Catcher in the Rye',
-      author: 'J.D. Salinger',
-      rating: 5,
-      notes: 'A classic.',
-    },
-    {
-      id: 2,
-      title: 'To Kill a Mockingbird',
-      author: 'Harper Lee',
-      rating: 4,
-      notes: 'Great read.',
-    },
-    {
-      id: 3,
-      title: '1984',
-      author: 'George Orwell',
-      rating: 5,
-      notes: 'Very thought-provoking.',
-    },
-  ];
+export class DashboardComponent implements OnInit {
+  books: Book[] = [];
 
   displayDialog: boolean = false;
   displayEditDialog: boolean = false;
   selectedBook!: Book;
 
-  constructor (private confirmationService: ConfirmationService) {}
+  constructor (private confirmationService: ConfirmationService, private bookService: BookService) {}
+
+  ngOnInit(): void {
+    this.bookService.getBooks().subscribe(data => {
+      this.books = data;
+    });
+  }
 
   showAddBookDialog() {
     this.displayDialog = true;
