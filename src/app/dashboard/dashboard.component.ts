@@ -69,7 +69,9 @@ export class DashboardComponent implements OnInit {
   }
 
   onBookAdded(newBook: any) {
-    this.books.push(newBook);
+    this.bookService.addBook(newBook).subscribe(addedBook => {
+      this.books.push(addedBook);
+    });
   }
 
   deleteBook(bookId: number) {
