@@ -62,10 +62,12 @@ export class DashboardComponent implements OnInit {
   }
 
   onBookUpdated(updatedBook: Book) {
-    const index = this.books.findIndex((book) => book.id === updatedBook.id);
-    if (index !== -1) { // if book is found
-      this.books[index] = updatedBook;
-    }
+    this.bookService.updateBook(updatedBook).subscribe(updatedBook => {
+      const index = this.books.findIndex((book) => book.id === updatedBook.id);
+      if (index !== -1) { // if book is found
+        this.books[index] = updatedBook;
+      }
+    });
   }
 
   onBookAdded(newBook: any) {
@@ -75,7 +77,9 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteBook(bookId: number) {
-    this.books = this.books.filter((b) => b.id !== bookId);
+    this.bookService.deleteBook(bookId).subscribe(() => {
+      this.books = this.books.filter((b) => b.id !== bookId);
+    });
   }
 
   confirmDelete(book: Book) {
